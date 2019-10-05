@@ -14,6 +14,13 @@ public class EnemyView : MonoBehaviour
     private const float MAX_ACCELERATION_PATROL = 6f;
     private const float MAX_ACCELERATION_GHOST = 8f;
     private const float MAX_ACCELERATION_CHASE = 10f;
+    private const float SLOWDOWN_DISTANCE_PATROL = 0.6f;
+    private const float SLOWDOWN_DISTANCE_GHOST = 1f;
+    private const float SLOWDOWN_DISTANCE_CHASE = 0f;
+    
+    private const float HEAT_FACTOR = 5f;
+    private const float LERP_FACTOR = 0.8f;
+    private const float SPOTTING_DISTANCE = 5f;
 
     private Enemy _model;
     [SerializeField] private GameObject _enemyShip;
@@ -39,7 +46,7 @@ public class EnemyView : MonoBehaviour
         Debug.Log("SETTING PATROL MODE with point " + emptyGO.transform.position.ToString());
         _aiPath.maxSpeed = MAX_SPEED_PATROL;
         _aiPath.rotationSpeed = MAX_ROTATION_SPEED_PATROL;
-        _aiPath.slowdownDistance = 0.6f;
+        _aiPath.slowdownDistance = SLOWDOWN_DISTANCE_PATROL;
         _aiPath.maxAcceleration = MAX_ACCELERATION_PATROL;
         _model.ChaseStatus = AIState.Patrol;
     }
@@ -54,7 +61,7 @@ public class EnemyView : MonoBehaviour
         _destinationSetter.target = GameController.Instance.Player.View.transform;
         _aiPath.maxSpeed = MAX_SPEED_CHASE;
         _aiPath.rotationSpeed = MAX_ROTATION_SPEED_CHASE;
-        _aiPath.slowdownDistance = 0.2f;
+        _aiPath.slowdownDistance = SLOWDOWN_DISTANCE_CHASE;
         _aiPath.maxAcceleration = MAX_ACCELERATION_CHASE;
         _model.ChaseStatus = AIState.Chase;
     }
@@ -74,7 +81,7 @@ public class EnemyView : MonoBehaviour
         Debug.Log("SETTING GHOST MODE with point " + ghostGO.transform.position.ToString());
         _aiPath.maxSpeed = MAX_SPEED_GHOST;
         _aiPath.rotationSpeed = MAX_ROTATION_SPEED_GHOST;
-        _aiPath.slowdownDistance = 0.4f;
+        _aiPath.slowdownDistance = SLOWDOWN_DISTANCE_GHOST;
         _aiPath.maxAcceleration = MAX_ACCELERATION_GHOST;
         _model.ChaseStatus = AIState.FindGhost;
     }
@@ -119,9 +126,9 @@ public class EnemyView : MonoBehaviour
         float heat = GameController.Instance.Player.Model.CurrentHeat;
         if (heat > 0)
         {
-            float heatAdjustedDistance = distance / (5 * heat);
-            float adjustedDistance = Mathf.Lerp(distance, heatAdjustedDistance, 0.8f);
-            if (adjustedDistance < 5f)
+            float heatAdjustedDistance = distance / (HEAT_FACTOR * heat);
+            float adjustedDistance = Mathf.Lerp(distance, heatAdjustedDistance, LERP_FACTOR);
+            if (adjustedDistance < SPOTTING_DISTANCE)
             {
                 if(_model.ChaseStatus == AIState.Patrol)
                     Debug.Log("Agent detected player! Distance: " + distance + " | Heat-Adjusted distance: " + heatAdjustedDistance + " | Final distance: " + adjustedDistance);
