@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour {
         MainCamera.Init();
         CreateEnemies();
         InitializeUI();
+        InitializeDialogue();
         UIController.Instance.InitializeCockpitUI();
         PlayerGhostPrefab = Resources.Load<GameObject>("PlayerGhost");
     }
@@ -72,5 +73,11 @@ public class GameController : MonoBehaviour {
     {
         GameObject uiCtrPrefab = Resources.Load<GameObject>("UIController");
         GameObject.Instantiate(uiCtrPrefab, new Vector2(0,0), Quaternion.identity);
+    }
+
+    private void InitializeDialogue()
+    {
+        GameObject dlgCtrPrefab = Resources.Load<GameObject>("DialogueController");
+        GameObject.Instantiate(dlgCtrPrefab, new Vector2(0,0), Quaternion.identity);
     }
 }

@@ -14,6 +14,21 @@ public class PlayerView : MonoBehaviour
 
     public void Update()
     {
+        if (_model.TimeUntilClearIsForgotten > 0)
+        {
+            _model.TimeUntilClearIsForgotten -= Time.deltaTime;
+        }
+
+        if (_model.TimeUntilOffenseIsForgotten > 0)
+        {
+            _model.TimeUntilOffenseIsForgotten -= Time.deltaTime;
+        }
+        
+        if (_model.TimeUntilOffenseIsForgotten < 0)
+        {
+           _model.TimeUntilOffenseIsForgotten = 0;
+        }
+
         #region Input handling
         
         Vector2 oldPosition = transform.position;

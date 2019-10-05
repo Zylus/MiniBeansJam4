@@ -5,6 +5,8 @@ using UnityEngine;
 public enum AIState
 {
     Patrol,
+    Approach,
+    Scan,
     Chase,
     FindGhost
 }

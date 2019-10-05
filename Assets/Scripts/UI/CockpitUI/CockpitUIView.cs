@@ -15,6 +15,7 @@ public class CockpitUIView : MonoBehaviour
     [SerializeField] private GameObject _viewportDisabledObject;
     [SerializeField] private GameObject _engineActiveLamp;
     [SerializeField] private GameObject _engineInactiveLamp;
+    [SerializeField] private Text _messageText;
 
     public event EventHandler OnViewportToggledEvent;
     public event EventHandler OnEngineToggledEvent;
@@ -53,6 +54,20 @@ public class CockpitUIView : MonoBehaviour
         if (handler != null)
         {
             handler(this, EventArgs.Empty);
+        }
+    }
+
+    public void OnMessageReceived(object sender, MessageSendingEventArgs e)
+    {
+        string message = DialogueController.Instance.GetMessage(e.type);
+        if (string.IsNullOrEmpty(message))
+        {
+            _messageText.gameObject.SetActive(false);
+        }
+        else
+        {
+            _messageText.text = message;
+            _messageText.gameObject.SetActive(true);
         }
     }
 }

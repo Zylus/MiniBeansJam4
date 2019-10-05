@@ -21,7 +21,7 @@ public class ElectroChangedEventArgs : EventArgs
     public float MaxElectro { get; set; }
 }
 
-public class Player
+public class Player : MonoBehaviour
 {
     public const int DEFAULT_HEALTH = 100;
     public const float DEFAULT_MAX_SPEED = 0.1f;
@@ -50,6 +50,9 @@ public class Player
     public Dictionary<string, PlayerDevice> HeatDevices { get; set; }
     public Dictionary<string, PlayerDevice> ElectroDevices { get; set; }
     public Vector2 MovementVector { get; set; }
+    public float TimeUntilClearIsForgotten { get; set; }
+    public float TimeUntilOffenseIsForgotten { get; set; }
+    public bool PlayerIsBeingChecked { get; set; }
 
     public event EventHandler<SpeedChangedEventArgs> OnSpeedChanged;
     public event EventHandler<EnginePowerChangedEventArgs> OnEnginePowerChanged;

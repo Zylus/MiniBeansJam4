@@ -21,6 +21,10 @@ public class CockpitUIController
         view.Init(model);
         view.OnViewportToggledEvent += GameController.Instance.Player.Model.OnViewportToggled;
         view.OnEngineToggledEvent += GameController.Instance.Player.Model.OnEngineToggled;
+        foreach(EnemyController enemy in GameController.Instance.Enemies)
+        {
+            enemy.View.MessageSendingEvent += view.OnMessageReceived;
+        }
         this.View = view;
         this.Model = model;
     }
