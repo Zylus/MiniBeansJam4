@@ -324,7 +324,7 @@ public class EnemyView : MonoBehaviour
 
     private bool PlayerTooFast()
     {
-        return GameController.Instance.Player.Model.CurrentSpeed > 0.03f;
+        return GameController.Instance.Player.Model.CurrentSpeed > 0.01f;
     }
 
     private void CheckIfPlayerStopped()

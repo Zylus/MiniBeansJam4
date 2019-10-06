@@ -20,6 +20,7 @@ public class CockpitUIView : MonoBehaviour
     [SerializeField] private Text _missionText;
     [SerializeField] private Text _cashText;
     [SerializeField] private GameObject _targetArrow;
+    [SerializeField] private ScrollRect _scrollRect;
 
     public event EventHandler OnViewportToggledEvent;
     public event EventHandler OnEngineToggledEvent;
@@ -78,18 +79,16 @@ public class CockpitUIView : MonoBehaviour
     public void OnMessageReceived(object sender, MessageSendingEventArgs e)
     {
         string message = DialogueController.Instance.GetMessage(e.type);
-        if (string.IsNullOrEmpty(message))
+        if (!string.IsNullOrEmpty(message))
         {
-            _messageText.gameObject.SetActive(false);
+            _messageText.text += ("\n-----------------\n" + message);
         }
-        else
-        {
-            _messageText.text = message;
-            _messageText.gameObject.SetActive(true);
-        }
+        Canvas.ForceUpdateCanvases();
+        _scrollRect.verticalScrollbar.value=0f;
+        Canvas.ForceUpdateCanvases();
     }
 
-    public void OnMissionReceived(Mission mission)
+    public void OnMissionReceived(Mission mission, bool justUpdatePrice = false)
     {
         if (mission == null)
         {
@@ -98,8 +97,17 @@ public class CockpitUIView : MonoBehaviour
         }
         else
         {
+            if (!justUpdatePrice)
+            {
+                _messageText.text += ("\n-----------------\n" + DialogueController.Instance.GetMissionMessage(mission));
+                Canvas.ForceUpdateCanvases();
+                _scrollRect.verticalScrollbar.value=0f;
+                Canvas.ForceUpdateCanvases();
+                _targetArrow.SetActive(true);
+            }
+            
             _missionText.text = "Current Mission:\n\nTarget: " + mission.EndStation.name + "\nReward: " + ((int)mission.Reward).ToString() + "$\nCargo: " + mission.CargoName;
-            _targetArrow.SetActive(true);
+            
         }
     }
 

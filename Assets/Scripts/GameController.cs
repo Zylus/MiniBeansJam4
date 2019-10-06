@@ -68,7 +68,7 @@ public class GameController : MonoBehaviour {
             }
 
             Player.Model.ActiveMission.Reward = reducedReward;
-            UIController.Instance.CockpitUI.View.OnMissionReceived(Player.Model.ActiveMission);
+            UIController.Instance.CockpitUI.View.OnMissionReceived(Player.Model.ActiveMission, true);
         }
     }
 

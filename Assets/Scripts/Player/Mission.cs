@@ -6,8 +6,11 @@ public class Mission
 {
     private List<string> CARGO_NAMES = new List<string>()
     {
-        "Marsian Powder", "Highly Scientific Waste",
-        "Hacked Cyberware", "Relaxing Herbs", "Placebos (Extra Dosage)"
+        "Flamorgian Gonads", "Highly Scientific Waste", "Diboflutoxin",
+        "Subspace Ginseng", "Hive Secretions", "Homeopathic Hyperloops",
+        "Atalantinian Energy Crystals", "Bioenergetic Auras", "Omblaxian Gastric Acid",
+        "Fingerbones of St. Blorflax", "Dr. Poppers Finest Curative Tonic",
+        "Actually just Placebos"
     };
 
     public const int MIN_REWARD = 100;
