@@ -12,7 +12,7 @@ public class PlayerView : MonoBehaviour
         _model = model;
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         if (_model.TimeUntilClearIsForgotten > 0)
         {

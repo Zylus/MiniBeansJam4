@@ -24,11 +24,13 @@ public class GameController : MonoBehaviour {
 
     [SerializeField] private GameObject _cameraObj;
     [SerializeField] private int _enemyCount;
+    [SerializeField] private GameObject _stationsParent;
 
     public PlayerController Player { get; set; }
     public MainCamera MainCamera { get; set; }
     public List<EnemyController> Enemies { get; set; }
     public GameObject PlayerGhostPrefab { get; set; }
+    public List<Station> Stations { get; set; }
 
     private void Start()
     {
@@ -41,6 +43,11 @@ public class GameController : MonoBehaviour {
         InitializeDialogue();
         UIController.Instance.InitializeCockpitUI();
         PlayerGhostPrefab = Resources.Load<GameObject>("PlayerGhost");
+        Stations = new List<Station>();
+        foreach(Transform child in _stationsParent.transform)
+        {
+            Stations.Add(child.gameObject.GetComponent<Station>());
+        }
     }
 
     void Update()
@@ -54,6 +61,36 @@ public class GameController : MonoBehaviour {
     public void RestartGame()
     {
         SceneManager.LoadScene("SampleScene");
+    }
+
+    public void OnStationEntered(Station station)
+    {
+        if (Player.Model.ActiveMission == null)
+        {
+            Mission newMission = new Mission();
+            newMission.Init(station);
+            Player.Model.ActiveMission = newMission;
+            UIController.Instance.CockpitUI.View.OnMissionReceived(newMission);
+        }
+        else
+        {
+            if (station == Player.Model.ActiveMission.EndStation)
+            {
+                Player.Model.Cash += Player.Model.ActiveMission.Reward;
+                UIController.Instance.CockpitUI.View.UpdateCashText(Player.Model.Cash);
+                Mission newMission = new Mission();
+                newMission.Init(station);
+                Player.Model.ActiveMission = newMission;
+                UIController.Instance.CockpitUI.View.OnMissionReceived(newMission);
+            }
+        }
+    }
+
+    public void PunishPlayer()
+    {
+        int fine = (int)(300f * Random.Range(0.8f, 1.2f));
+        Player.Model.Cash -= fine;
+        UIController.Instance.CockpitUI.View.UpdateCashText(Player.Model.Cash);
     }
 
     private void CreateEnemies()

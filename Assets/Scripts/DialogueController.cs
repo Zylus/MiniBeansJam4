@@ -44,6 +44,8 @@ public class DialogueController : MonoBehaviour
                 return "[Thank you for complying, have a good day]";
             case MessageType.Escaped:
                 return "[COMPUTER]:\n[It looks like you've escaped them for now, Captain.]";
+            case MessageType.Fine:
+                return "[Pay me some cash or I will shoot you thanks]";
             default:
                 return string.Empty;
         }

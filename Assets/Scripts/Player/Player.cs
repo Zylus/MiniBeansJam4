@@ -21,7 +21,7 @@ public class ElectroChangedEventArgs : EventArgs
     public float MaxElectro { get; set; }
 }
 
-public class Player : MonoBehaviour
+public class Player
 {
     public const int DEFAULT_HEALTH = 100;
     public const float DEFAULT_MAX_SPEED = 0.1f;
@@ -53,6 +53,8 @@ public class Player : MonoBehaviour
     public float TimeUntilClearIsForgotten { get; set; }
     public float TimeUntilOffenseIsForgotten { get; set; }
     public bool PlayerIsBeingChecked { get; set; }
+    public Mission ActiveMission { get; set; } 
+    public int Cash { get; set; }
 
     public event EventHandler<SpeedChangedEventArgs> OnSpeedChanged;
     public event EventHandler<EnginePowerChangedEventArgs> OnEnginePowerChanged;
@@ -68,6 +70,8 @@ public class Player : MonoBehaviour
         RotationSpeed = DEFAULT_ROTATION_SPEED;
         ElectroDecayRate = DEFAULT_ELECTRO_DECAY_RATE;
         InitializeDevices();
+        ActiveMission = null;
+        Cash = 0;
     }
 
     private void InitializeDevices()

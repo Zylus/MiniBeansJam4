@@ -12,17 +12,17 @@ public class MessageSendingEventArgs : EventArgs
 public class EnemyView : MonoBehaviour
 {
     private const float MAX_SPEED_PATROL = 1f;
-    private const float MAX_SPEED_GHOST = 2f;
-    private const float MAX_SPEED_CHASE = 3.5f;
+    private const float MAX_SPEED_GHOST = 3f;
+    private const float MAX_SPEED_CHASE = 7f;
     private const float MAX_ROTATION_SPEED_PATROL = 300f;
     private const float MAX_ROTATION_SPEED_GHOST = 330f;
-    private const float MAX_ROTATION_SPEED_CHASE = 360f;
+    private const float MAX_ROTATION_SPEED_CHASE = 480f;
     private const float MAX_ACCELERATION_PATROL = 6f;
     private const float MAX_ACCELERATION_GHOST = 8f;
     private const float MAX_ACCELERATION_CHASE = 10f;
     private const float SLOWDOWN_DISTANCE_PATROL = 0.6f;
     private const float SLOWDOWN_DISTANCE_GHOST = 1f;
-    private const float SLOWDOWN_DISTANCE_CHASE = 0f;
+    private const float SLOWDOWN_DISTANCE_CHASE = 0.4f;
     private const float SLOWDOWN_DISTANCE_APPROACH = 5f;
     private const float STOP_DISTANCE_APPROACH = 1f;
     
@@ -64,6 +64,7 @@ public class EnemyView : MonoBehaviour
         _aiPath.slowdownDistance = SLOWDOWN_DISTANCE_PATROL;
         _aiPath.maxAcceleration = MAX_ACCELERATION_PATROL;
         _model.ChaseStatus = AIState.Patrol;
+        GameController.Instance.Player.Model.TimeUntilOffenseIsForgotten = 0f;
     }
 
     public void SetPlayerApproachMode()
@@ -137,6 +138,23 @@ public class EnemyView : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (_model.ChaseStatus == AIState.Chase && !PlayerIsStillCleared() && Vector2.Distance(transform.position, _destinationSetter.target.transform.position) <= 0.5f)
+        {
+            // reached player
+            EventHandler<MessageSendingEventArgs> handler = MessageSendingEvent;
+            if (handler != null)
+            {
+                handler(this, new MessageSendingEventArgs()
+                {
+                    type = MessageType.Fine
+                });
+            }
+            GameController.Instance.PunishPlayer();
+            GameController.Instance.Player.Model.TimeUntilClearIsForgotten = PLAYER_CLEAR_MEMORY_TIME;
+            GameController.Instance.Player.Model.PlayerIsBeingChecked = false;
+            SetPatrolMode();
+        }
+
         // Refresh patrol path
         if (_aiPath.reachedEndOfPath && !_aiPath.pathPending)
         {
@@ -170,11 +188,16 @@ public class EnemyView : MonoBehaviour
             CheckIfPlayerStopped();
         }
 
+        if(_model.ChaseStatus == AIState.Chase && PlayerIsStillCleared())
+        {
+            SetPatrolMode();
+        }
+
         if (_model.ChaseStatus == AIState.Patrol && !PlayerIsStillCleared() && !PlayerIsBeingChecked() && !PlayerOffenseIsRemembered() && PlayerDetected())
         {
             SetPlayerApproachMode();
         }
-        else if ((_model.ChaseStatus == AIState.FindGhost || (_model.ChaseStatus == AIState.Patrol && PlayerOffenseIsRemembered())) && PlayerDetected())
+        else if ((_model.ChaseStatus == AIState.FindGhost || (_model.ChaseStatus == AIState.Patrol && PlayerOffenseIsRemembered() && !PlayerIsStillCleared())) && PlayerDetected())
         {
             SetPlayerChaseMode();
         }

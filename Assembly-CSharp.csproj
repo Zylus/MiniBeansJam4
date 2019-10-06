@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Player\Devices\Engine.cs" />
      <Compile Include="Assets\Scripts\Player\Devices\PlayerDevice.cs" />
      <Compile Include="Assets\Scripts\Player\Devices\Viewport.cs" />
+     <Compile Include="Assets\Scripts\Player\Mission.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerView.cs" />
@@ -61,6 +62,7 @@
      <Compile Include="Assets\Scripts\UI\CockpitUI\CockpitUIController.cs" />
      <Compile Include="Assets\Scripts\UI\CockpitUI\CockpitUIView.cs" />
      <Compile Include="Assets\Scripts\UIController.cs" />
+     <Compile Include="Assets\Station.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/git_projects/MiniBeansJam4/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

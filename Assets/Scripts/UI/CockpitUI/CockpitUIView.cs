@@ -16,6 +16,8 @@ public class CockpitUIView : MonoBehaviour
     [SerializeField] private GameObject _engineActiveLamp;
     [SerializeField] private GameObject _engineInactiveLamp;
     [SerializeField] private Text _messageText;
+    [SerializeField] private Text _missionText;
+    [SerializeField] private Text _cashText;
 
     public event EventHandler OnViewportToggledEvent;
     public event EventHandler OnEngineToggledEvent;
@@ -69,5 +71,15 @@ public class CockpitUIView : MonoBehaviour
             _messageText.text = message;
             _messageText.gameObject.SetActive(true);
         }
+    }
+
+    public void OnMissionReceived(Mission mission)
+    {
+        _missionText.text = "Current Mission:\n\nTarget: " + mission.EndStation.name + "\nReward: " + mission.Reward.ToString() + "$\nCargo: " + mission.CargoName;
+    }
+
+    public void UpdateCashText(int cash)
+    {
+        _cashText.text = cash.ToString() + " $";
     }
 }

@@ -27,5 +27,6 @@ public class UIController : MonoBehaviour {
     {
         CockpitUI = new CockpitUIController();
         CockpitUI.CreateCockpitUI();
+        CockpitUI.View.UpdateCashText(GameController.Instance.Player.Model.Cash);
     }
 }
