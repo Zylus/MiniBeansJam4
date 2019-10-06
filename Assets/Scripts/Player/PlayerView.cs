@@ -6,6 +6,10 @@ public class PlayerView : MonoBehaviour
 {
     private Player _model;
     [SerializeField] private GameObject _playerShip;
+    [SerializeField] private GameObject _forwardFlame;
+    [SerializeField] private GameObject _backwardFlame;
+    [SerializeField] private GameObject _rightTurnFlame;
+    [SerializeField] private GameObject _leftTurnFlame;
 
     public void Init(Player model)
     {
@@ -55,11 +59,23 @@ public class PlayerView : MonoBehaviour
         {
             float actualTranslation = _model.GetMovementMomentum(translation);
             transform.Translate(0,actualTranslation,0);
+            if (translation > 0)
+            {
+                _forwardFlame.SetActive(true);
+                _backwardFlame.SetActive(false);
+            }
+            else if (translation < 0)
+            {
+                _forwardFlame.SetActive(false);
+                _backwardFlame.SetActive(true);
+            }
         }
         else
         {
             float actualTranslation = _model.CurrentSpeed;
             transform.Translate(0,actualTranslation,0);
+            _forwardFlame.SetActive(false);
+            _backwardFlame.SetActive(false);
         }
         
         float rotation = Input.GetAxis("Horizontal");
@@ -67,11 +83,30 @@ public class PlayerView : MonoBehaviour
         {
             float actualRotation = _model.GetActualRotation(rotation);
             transform.Rotate(0,0,actualRotation);
+            if (rotation > 0)
+            {
+                _rightTurnFlame.SetActive(true);
+                _leftTurnFlame.SetActive(false);
+            }
+            else if (rotation < 0)
+            {
+                _rightTurnFlame.SetActive(false);
+                _leftTurnFlame.SetActive(true);
+            }
+        }
+        else
+        {
+            _rightTurnFlame.SetActive(false);
+            _leftTurnFlame.SetActive(false);
         }
 
         if (!_model.Devices["Engine"].IsActive || (translation == 0 && rotation == 0))
         {
             _model.DecayEngineHeat();
+            _forwardFlame.SetActive(false);
+            _backwardFlame.SetActive(false);
+            _rightTurnFlame.SetActive(false);
+            _leftTurnFlame.SetActive(false);
         }
 
         Vector2 newPosition = transform.position;

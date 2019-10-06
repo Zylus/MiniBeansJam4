@@ -158,6 +158,7 @@ public class EnemyView : MonoBehaviour
             GameController.Instance.PunishPlayer();
             GameController.Instance.Player.Model.TimeUntilClearIsForgotten = PLAYER_CLEAR_MEMORY_TIME;
             GameController.Instance.Player.Model.PlayerIsBeingChecked = false;
+            GameController.Instance.JettisonCargo();
             SetPatrolMode();
         }
 
