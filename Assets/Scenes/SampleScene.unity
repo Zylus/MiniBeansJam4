@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraObj: {fileID: 519420028}
-  _enemyCount: 2
+  _enemyCount: 3
   _stationsParent: {fileID: 803768892}
 --- !u!4 &28228723
 Transform:

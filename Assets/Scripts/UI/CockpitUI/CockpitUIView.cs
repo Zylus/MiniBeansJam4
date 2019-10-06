@@ -19,6 +19,7 @@ public class CockpitUIView : MonoBehaviour
     [SerializeField] private Text _messageText;
     [SerializeField] private Text _missionText;
     [SerializeField] private Text _cashText;
+    [SerializeField] private GameObject _targetArrow;
 
     public event EventHandler OnViewportToggledEvent;
     public event EventHandler OnEngineToggledEvent;
@@ -36,6 +37,14 @@ public class CockpitUIView : MonoBehaviour
         _engineThrustSlider.value = _model.Momentum;
         _heatEmissionSlider.value = _model.HeatEmissions;
         _electroEmissionSlider.value = _model.ElectroEmissions;
+        Vector2 targetDirection = GameController.Instance.GetTargetVector();
+        if (targetDirection != Vector2.zero)
+        {
+            _targetArrow.transform.localPosition =  new Vector3(targetDirection.x * 380, targetDirection.y * 380, 0);
+            _targetArrow.transform.right = new Vector2(targetDirection.x, targetDirection.y);
+            _targetArrow.transform.Rotate (Vector3.forward * 90);
+        }
+        
     }
 
     private void OnViewportToggled()
@@ -85,10 +94,12 @@ public class CockpitUIView : MonoBehaviour
         if (mission == null)
         {
             _missionText.text = "No active Mission.";
+            _targetArrow.SetActive(false);
         }
         else
         {
             _missionText.text = "Current Mission:\n\nTarget: " + mission.EndStation.name + "\nReward: " + ((int)mission.Reward).ToString() + "$\nCargo: " + mission.CargoName;
+            _targetArrow.SetActive(true);
         }
     }
 

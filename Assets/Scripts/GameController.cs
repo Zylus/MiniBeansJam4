@@ -76,6 +76,18 @@ public class GameController : MonoBehaviour {
     {
         SceneManager.LoadScene("SampleScene");
     }
+    
+    public Vector2 GetTargetVector()
+    {
+        if (Player.Model.ActiveMission == null)
+        {
+            return Vector2.zero;
+        }
+
+        Vector2 targetDirection = Player.Model.ActiveMission.EndStation.transform.position - Player.View.transform.position;
+        targetDirection = targetDirection.normalized;
+        return targetDirection;
+    }
 
     public void OnStationEntered(Station station)
     {
