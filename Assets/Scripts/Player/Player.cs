@@ -24,16 +24,16 @@ public class ElectroChangedEventArgs : EventArgs
 public class Player
 {
     public const int DEFAULT_HEALTH = 100;
-    public const float DEFAULT_MAX_SPEED = 0.1f;
-    public const float DEFAULT_ACCELERATION = 0.06f;
-    public const float DEFAULT_DECELERATION = 0.15f;
-    public const float DEFAULT_ROTATION_SPEED = 80f;
-    public const float DEFAULT_ELECTRO_DECAY_RATE = 0.4f;
-    public const float DEFAULT_VIEWPORT_MAX_EMISSIONS = 0.2f;
+    public const float DEFAULT_MAX_SPEED = 0.05f;
+    public const float DEFAULT_ACCELERATION = 0.01f;
+    public const float DEFAULT_DECELERATION = 0.03f;
+    public const float DEFAULT_ROTATION_SPEED = 40f;
+    public const float DEFAULT_ELECTRO_DECAY_RATE = 0.04f;
+    public const float DEFAULT_VIEWPORT_MAX_EMISSIONS = 0.02f;
     public const float DEFAULT_ENGINE_MAX_EMISSIONS = 1f;
     public const float DEFAULT_ENGINE_MIN_EMISSIONS = 0.1f;
-    public const float DEFAULT_ENGINE_DECAY_RATE = 0.15f;
-    public const float DEFAULT_ENGINE_BUILDUP_RATE = 1.5f;
+    public const float DEFAULT_ENGINE_DECAY_RATE = 0.1f;
+    public const float DEFAULT_ENGINE_BUILDUP_RATE = 0.3f;
 
     public int Health { get; set; }
     public float MaxSpeed { get; set; }
