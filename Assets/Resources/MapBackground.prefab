@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1182104913747604862}
   - component: {fileID: 2545531549780043342}
   m_Layer: 0
-  m_Name: Planet 3
+  m_Name: New Haven
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 2941527940290166119}
   - component: {fileID: 6793108842671598551}
   m_Layer: 0
-  m_Name: Planet 5
+  m_Name: Trzygg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -571,7 +571,7 @@ GameObject:
   - component: {fileID: 3329500230632432248}
   - component: {fileID: 8915582600515962759}
   m_Layer: 0
-  m_Name: Planet 1
+  m_Name: Kessig V
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -921,7 +921,7 @@ GameObject:
   - component: {fileID: 8615810183666004475}
   - component: {fileID: 3971291253212171349}
   m_Layer: 0
-  m_Name: Planet 2
+  m_Name: Aruna
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1031,7 +1031,7 @@ GameObject:
   - component: {fileID: 1215094396992031662}
   - component: {fileID: 849252065852721362}
   m_Layer: 0
-  m_Name: Planet 4
+  m_Name: Phallabretix
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
