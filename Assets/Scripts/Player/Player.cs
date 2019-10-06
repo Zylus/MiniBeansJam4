@@ -24,16 +24,16 @@ public class ElectroChangedEventArgs : EventArgs
 public class Player
 {
     public const int DEFAULT_HEALTH = 100;
-    public const float DEFAULT_MAX_SPEED = 0.1f;
-    public const float DEFAULT_ACCELERATION = 0.06f;
-    public const float DEFAULT_DECELERATION = 0.15f;
-    public const float DEFAULT_ROTATION_SPEED = 80f;
-    public const float DEFAULT_ELECTRO_DECAY_RATE = 0.4f;
-    public const float DEFAULT_VIEWPORT_MAX_EMISSIONS = 0.2f;
+    public const float DEFAULT_MAX_SPEED = 0.05f;
+    public const float DEFAULT_ACCELERATION = 0.01f;
+    public const float DEFAULT_DECELERATION = 0.03f;
+    public const float DEFAULT_ROTATION_SPEED = 40f;
+    public const float DEFAULT_ELECTRO_DECAY_RATE = 0.04f;
+    public const float DEFAULT_VIEWPORT_MAX_EMISSIONS = 0.02f;
     public const float DEFAULT_ENGINE_MAX_EMISSIONS = 1f;
     public const float DEFAULT_ENGINE_MIN_EMISSIONS = 0.1f;
-    public const float DEFAULT_ENGINE_DECAY_RATE = 0.15f;
-    public const float DEFAULT_ENGINE_BUILDUP_RATE = 1.5f;
+    public const float DEFAULT_ENGINE_DECAY_RATE = 0.1f;
+    public const float DEFAULT_ENGINE_BUILDUP_RATE = 0.3f;
 
     public int Health { get; set; }
     public float MaxSpeed { get; set; }
@@ -99,14 +99,14 @@ public class Player
         PlayerDevice viewport = new Viewport()
         {
             Name = "Viewport",
-            Emission = EmissionType.Electro,
+            Emission = EmissionType.Heat,
             CurrentEmissions = DEFAULT_VIEWPORT_MAX_EMISSIONS,
             MaxEmissions = DEFAULT_VIEWPORT_MAX_EMISSIONS,
             IsActive = true
         };
 
         Devices.Add("Viewport", viewport);
-        ElectroDevices.Add("Viewport", viewport);
+        HeatDevices.Add("Viewport", viewport);
 
 
     }
@@ -187,7 +187,7 @@ public class Player
         }
     }
 
-    private void EnginePowerChanged(float amount, bool fromRotation = false)
+    public void EnginePowerChanged(float amount, bool fromRotation = false)
     {
         (Devices["Engine"] as Engine).IncreaseEngineEmission(amount, fromRotation);
 
@@ -196,9 +196,22 @@ public class Player
         {
             handler(this, new EnginePowerChangedEventArgs()
             {
-                EngineLoad = (Devices["Engine"] as Engine).CurrentEmissions,
+                EngineLoad = CurrentHeat,
                 MaxLoad = 1
             });
+        }
+    }
+
+    public void UpdateViewportEmissions()
+    {
+        Viewport port = (Devices["Viewport"] as Viewport);
+        if (port.IsActive)
+        {
+            port.IncreaseViewportEmission();
+        }
+        else
+        {
+            port.DecayViewportEmission();
         }
     }
 
@@ -206,13 +219,13 @@ public class Player
     {
         (Devices["Viewport"] as Viewport).ToggleActive();
 
-        EventHandler<ElectroChangedEventArgs> handler = OnElectroChanged;
+        EventHandler<EnginePowerChangedEventArgs> handler = OnEnginePowerChanged;
         if (handler != null)
         {
-            handler(this, new ElectroChangedEventArgs()
+            handler(this, new EnginePowerChangedEventArgs()
             {
-                TotalElectro = CurrentElectro,
-                MaxElectro = 1
+                EngineLoad = CurrentHeat,
+                MaxLoad = 1
             });
         }
     }
@@ -221,4 +234,5 @@ public class Player
     {
         Devices["Engine"].IsActive = !Devices["Engine"].IsActive;
     }
+
 }

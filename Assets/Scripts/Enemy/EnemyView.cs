@@ -11,24 +11,24 @@ public class MessageSendingEventArgs : EventArgs
 
 public class EnemyView : MonoBehaviour
 {
-    private const float MAX_SPEED_PATROL = 1f;
-    private const float MAX_SPEED_GHOST = 3f;
-    private const float MAX_SPEED_CHASE = 7f;
-    private const float MAX_ROTATION_SPEED_PATROL = 300f;
-    private const float MAX_ROTATION_SPEED_GHOST = 330f;
-    private const float MAX_ROTATION_SPEED_CHASE = 480f;
-    private const float MAX_ACCELERATION_PATROL = 5f;
-    private const float MAX_ACCELERATION_GHOST = 5.5f;
-    private const float MAX_ACCELERATION_CHASE = 6f;
-    private const float SLOWDOWN_DISTANCE_PATROL = 0.6f;
+    private const float MAX_SPEED_PATROL = 0.3f;
+    private const float MAX_SPEED_GHOST = 0.7f;
+    private const float MAX_SPEED_CHASE = 1.5f;
+    private const float MAX_ROTATION_SPEED_PATROL = 150f;
+    private const float MAX_ROTATION_SPEED_GHOST = 180f;
+    private const float MAX_ROTATION_SPEED_CHASE = 240f;
+    private const float MAX_ACCELERATION_PATROL = 1f;
+    private const float MAX_ACCELERATION_GHOST = 1f;
+    private const float MAX_ACCELERATION_CHASE = 5f;
+    private const float SLOWDOWN_DISTANCE_PATROL = 1f;
     private const float SLOWDOWN_DISTANCE_GHOST = 1f;
-    private const float SLOWDOWN_DISTANCE_CHASE = 0.4f;
+    private const float SLOWDOWN_DISTANCE_CHASE = 1f;
     private const float SLOWDOWN_DISTANCE_APPROACH = 3f;
-    private const float STOP_DISTANCE_APPROACH = 0.5f;
+    private const float STOP_DISTANCE_APPROACH = 1f;
     
     private const float HEAT_FACTOR = 5f;
     private const float LERP_FACTOR = 0.8f;
-    private const float SPOTTING_DISTANCE = 4f;
+    private const float SPOTTING_DISTANCE = 3f;
     private const float PLAYER_STOPPING_TIME = 5f;
     private const float PLAYER_CLEAR_MEMORY_TIME = 8f;
     private const float PLAYER_OFFENSE_MEMORY_TIME = 30f;

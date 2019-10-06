@@ -44,6 +44,8 @@ public class PlayerView : MonoBehaviour
            _model.TimeUntilPlayerIsScanned = 0;
         }
 
+        _model.UpdateViewportEmissions();
+
         #region Input handling
         
         Vector2 oldPosition = transform.position;
