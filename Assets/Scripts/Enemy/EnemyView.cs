@@ -26,9 +26,9 @@ public class EnemyView : MonoBehaviour
     private const float SLOWDOWN_DISTANCE_APPROACH = 3f;
     private const float STOP_DISTANCE_APPROACH = 1f;
     
-    private const float HEAT_FACTOR = 5f;
+    private const float HEAT_FACTOR = 3f;
     private const float LERP_FACTOR = 0.8f;
-    private const float SPOTTING_DISTANCE = 3f;
+    private const float SPOTTING_DISTANCE = 2f;
     private const float PLAYER_STOPPING_TIME = 5f;
     private const float PLAYER_CLEAR_MEMORY_TIME = 8f;
     private const float PLAYER_OFFENSE_MEMORY_TIME = 30f;
