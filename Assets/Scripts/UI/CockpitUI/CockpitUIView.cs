@@ -12,6 +12,7 @@ public class CockpitUIView : MonoBehaviour
     [SerializeField] private Slider _electroEmissionSlider;
     [SerializeField] private Button _toggleViewportButton;
     [SerializeField] private Button _toggleEngineButton;
+    [SerializeField] private LongClickButton _jettisonCargoButton;
     [SerializeField] private GameObject _viewportDisabledObject;
     [SerializeField] private GameObject _engineActiveLamp;
     [SerializeField] private GameObject _engineInactiveLamp;
@@ -27,6 +28,7 @@ public class CockpitUIView : MonoBehaviour
         _model = model;
         _toggleViewportButton.onClick.AddListener(OnViewportToggled);
         _toggleEngineButton.onClick.AddListener(OnEngineToggled);
+        _jettisonCargoButton.onLongClick.AddListener(OnJettisonCargo);
     }
 
     private void LateUpdate()
@@ -59,6 +61,11 @@ public class CockpitUIView : MonoBehaviour
         }
     }
 
+    private void OnJettisonCargo()
+    {
+        GameController.Instance.JettisonCargo();
+    }
+
     public void OnMessageReceived(object sender, MessageSendingEventArgs e)
     {
         string message = DialogueController.Instance.GetMessage(e.type);
@@ -75,7 +82,14 @@ public class CockpitUIView : MonoBehaviour
 
     public void OnMissionReceived(Mission mission)
     {
-        _missionText.text = "Current Mission:\n\nTarget: " + mission.EndStation.name + "\nReward: " + mission.Reward.ToString() + "$\nCargo: " + mission.CargoName;
+        if (mission == null)
+        {
+            _missionText.text = "No active Mission.";
+        }
+        else
+        {
+            _missionText.text = "Current Mission:\n\nTarget: " + mission.EndStation.name + "\nReward: " + ((int)mission.Reward).ToString() + "$\nCargo: " + mission.CargoName;
+        }
     }
 
     public void UpdateCashText(int cash)

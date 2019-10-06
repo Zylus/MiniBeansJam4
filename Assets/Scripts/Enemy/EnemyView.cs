@@ -17,18 +17,18 @@ public class EnemyView : MonoBehaviour
     private const float MAX_ROTATION_SPEED_PATROL = 300f;
     private const float MAX_ROTATION_SPEED_GHOST = 330f;
     private const float MAX_ROTATION_SPEED_CHASE = 480f;
-    private const float MAX_ACCELERATION_PATROL = 6f;
-    private const float MAX_ACCELERATION_GHOST = 8f;
-    private const float MAX_ACCELERATION_CHASE = 10f;
+    private const float MAX_ACCELERATION_PATROL = 5f;
+    private const float MAX_ACCELERATION_GHOST = 5.5f;
+    private const float MAX_ACCELERATION_CHASE = 6f;
     private const float SLOWDOWN_DISTANCE_PATROL = 0.6f;
     private const float SLOWDOWN_DISTANCE_GHOST = 1f;
     private const float SLOWDOWN_DISTANCE_CHASE = 0.4f;
-    private const float SLOWDOWN_DISTANCE_APPROACH = 5f;
-    private const float STOP_DISTANCE_APPROACH = 1f;
+    private const float SLOWDOWN_DISTANCE_APPROACH = 3f;
+    private const float STOP_DISTANCE_APPROACH = 0.5f;
     
     private const float HEAT_FACTOR = 5f;
     private const float LERP_FACTOR = 0.8f;
-    private const float SPOTTING_DISTANCE = 5f;
+    private const float SPOTTING_DISTANCE = 4f;
     private const float PLAYER_STOPPING_TIME = 5f;
     private const float PLAYER_CLEAR_MEMORY_TIME = 8f;
     private const float PLAYER_OFFENSE_MEMORY_TIME = 30f;
@@ -136,6 +136,12 @@ public class EnemyView : MonoBehaviour
         _model.ChaseStatus = AIState.FindGhost;
     }
 
+    void SetScanMode()
+    {
+        GameController.Instance.Player.Model.TimeUntilPlayerIsScanned = 1.5f;
+        _model.ChaseStatus = AIState.Scan;
+    }
+
     void FixedUpdate()
     {
         if (_model.ChaseStatus == AIState.Chase && !PlayerIsStillCleared() && Vector2.Distance(transform.position, _destinationSetter.target.transform.position) <= 0.5f)
@@ -183,7 +189,7 @@ public class EnemyView : MonoBehaviour
             }
         }
 
-        if(_model.ChaseStatus == AIState.Approach)
+        if(_model.ChaseStatus == AIState.Approach || _model.ChaseStatus == AIState.Scan)
         {
             CheckIfPlayerStopped();
         }
@@ -205,21 +211,61 @@ public class EnemyView : MonoBehaviour
         {
             SetFindGhostMode();
         }
-        else if (_model.ChaseStatus == AIState.Approach && CloseToTarget() && !PlayerTooFast() && PlayerDetected())
+        else if (_model.ChaseStatus == AIState.Approach && CloseToTarget() && !PlayerTooFast() && PlayerDetected() && !PlayerIsBeingScanned())
         {
-            // skip scanning for now
-            GameController.Instance.Player.Model.TimeUntilClearIsForgotten = PLAYER_CLEAR_MEMORY_TIME;
-            GameController.Instance.Player.Model.PlayerIsBeingChecked = false;
-            SetPatrolMode();
             EventHandler<MessageSendingEventArgs> handler = MessageSendingEvent;
             if (handler != null)
             {
                 handler(this, new MessageSendingEventArgs()
                 {
-                    type = MessageType.FreeToGo
+                    type = MessageType.Scan
                 });
             }
+
+            SetScanMode();
         }
+        else if(_model.ChaseStatus == AIState.Scan && CloseToTarget() && !PlayerTooFast() && PlayerDetected() && !PlayerIsBeingScanned())
+        {
+            if (!PlayerHasIllegalCargo())
+            {
+                GameController.Instance.Player.Model.TimeUntilClearIsForgotten = PLAYER_CLEAR_MEMORY_TIME;
+                GameController.Instance.Player.Model.PlayerIsBeingChecked = false;
+                SetPatrolMode();
+                EventHandler<MessageSendingEventArgs> handler = MessageSendingEvent;
+                if (handler != null)
+                {
+                    handler(this, new MessageSendingEventArgs()
+                    {
+                        type = MessageType.FreeToGo
+                    });
+                }
+            }
+            else
+            {
+                SetPlayerChaseMode();
+                GameController.Instance.Player.Model.PlayerIsBeingChecked = false;
+            }
+            
+        }
+        
+    }
+
+    private bool PlayerHasIllegalCargo()
+    {
+        if (GameController.Instance.Player.Model.ActiveMission != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool PlayerIsBeingScanned()
+    {
+        if (GameController.Instance.Player.Model.TimeUntilPlayerIsScanned > 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     private bool PlayerIsStillCleared()

@@ -10,14 +10,14 @@ public class Mission
         "Hacked Cyberware", "Relaxing Herbs", "Placebos (Extra Dosage)"
     };
 
-    private const int MIN_REWARD = 100;
+    public const int MIN_REWARD = 100;
     private const int MAX_REWARD = 5000;
     private const float MIN_DISTANCE = 10f;
     private const float MAX_DISTANCE = 100f;
 
     public Station StartStation { get; set; }
     public Station EndStation { get; set; }
-    public int Reward { get; set; }
+    public float Reward { get; set; }
     public string CargoName { get; set; }
     
     public void Init(Station startStation)
@@ -29,7 +29,8 @@ public class Mission
         float distance = Vector2.Distance(StartStation.transform.position, EndStation.transform.position);
         float percentage = Mathf.InverseLerp(MIN_DISTANCE, MAX_DISTANCE, distance);
         percentage = percentage * Random.Range(0.8f, 1.2f);
-        Reward = (int)Mathf.Lerp(MIN_REWARD, MAX_REWARD, percentage);
+        Reward = Mathf.Lerp(MIN_REWARD, MAX_REWARD, percentage);
+        Reward = Mathf.Round(Reward);
         CargoName = CARGO_NAMES[Random.Range(0, CARGO_NAMES.Count)];
     }
 }

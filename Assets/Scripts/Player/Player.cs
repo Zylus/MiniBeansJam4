@@ -52,6 +52,7 @@ public class Player
     public Vector2 MovementVector { get; set; }
     public float TimeUntilClearIsForgotten { get; set; }
     public float TimeUntilOffenseIsForgotten { get; set; }
+    public float TimeUntilPlayerIsScanned { get; set; }
     public bool PlayerIsBeingChecked { get; set; }
     public Mission ActiveMission { get; set; } 
     public int Cash { get; set; }

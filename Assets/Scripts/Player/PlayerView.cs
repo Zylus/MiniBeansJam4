@@ -19,6 +19,11 @@ public class PlayerView : MonoBehaviour
             _model.TimeUntilClearIsForgotten -= Time.deltaTime;
         }
 
+        if (_model.TimeUntilClearIsForgotten < 0)
+        {
+           _model.TimeUntilClearIsForgotten = 0;
+        }
+
         if (_model.TimeUntilOffenseIsForgotten > 0)
         {
             _model.TimeUntilOffenseIsForgotten -= Time.deltaTime;
@@ -27,6 +32,16 @@ public class PlayerView : MonoBehaviour
         if (_model.TimeUntilOffenseIsForgotten < 0)
         {
            _model.TimeUntilOffenseIsForgotten = 0;
+        }
+
+        if (_model.TimeUntilPlayerIsScanned > 0)
+        {
+            _model.TimeUntilPlayerIsScanned -= Time.deltaTime;
+        }
+        
+        if (_model.TimeUntilPlayerIsScanned < 0)
+        {
+           _model.TimeUntilPlayerIsScanned = 0;
         }
 
         #region Input handling

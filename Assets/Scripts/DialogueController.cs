@@ -46,6 +46,8 @@ public class DialogueController : MonoBehaviour
                 return "[COMPUTER]:\n[It looks like you've escaped them for now, Captain.]";
             case MessageType.Fine:
                 return "[Pay me some cash or I will shoot you thanks]";
+            case MessageType.Scan:
+                return "[Please hold while we're scanning your shit]";
             default:
                 return string.Empty;
         }

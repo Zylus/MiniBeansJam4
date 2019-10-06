@@ -56,6 +56,20 @@ public class GameController : MonoBehaviour {
         {
             RestartGame();
         }
+
+        if (Player.Model.ActiveMission != null)
+        {
+            float timeFactor = 1f;
+            float reducedReward = Player.Model.ActiveMission.Reward;
+            reducedReward = reducedReward - (Time.deltaTime * timeFactor);
+            if (reducedReward < Mission.MIN_REWARD)
+            {
+                reducedReward = Mission.MIN_REWARD;
+            }
+
+            Player.Model.ActiveMission.Reward = reducedReward;
+            UIController.Instance.CockpitUI.View.OnMissionReceived(Player.Model.ActiveMission);
+        }
     }
 
     public void RestartGame()
@@ -76,13 +90,22 @@ public class GameController : MonoBehaviour {
         {
             if (station == Player.Model.ActiveMission.EndStation)
             {
-                Player.Model.Cash += Player.Model.ActiveMission.Reward;
+                Player.Model.Cash += (int)Mathf.Round(Player.Model.ActiveMission.Reward);
                 UIController.Instance.CockpitUI.View.UpdateCashText(Player.Model.Cash);
                 Mission newMission = new Mission();
                 newMission.Init(station);
                 Player.Model.ActiveMission = newMission;
                 UIController.Instance.CockpitUI.View.OnMissionReceived(newMission);
             }
+        }
+    }
+
+    public void JettisonCargo()
+    {
+        if (Player.Model.ActiveMission != null)
+        {
+            Player.Model.ActiveMission = null;
+            UIController.Instance.CockpitUI.View.OnMissionReceived(null);
         }
     }
 
@@ -100,7 +123,7 @@ public class GameController : MonoBehaviour {
         {
             EnemyController enemyController = new EnemyController();
             Vector2 position = Player.View.transform.position;
-            Vector2 offset = new Vector2(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
+            Vector2 offset = new Vector2(Random.Range(-20f, 20f), Random.Range(-20f, 20f));
             enemyController.CreateEnemy(position + offset);
             Enemies.Add(enemyController);
         }
