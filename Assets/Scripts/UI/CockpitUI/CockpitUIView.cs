@@ -40,7 +40,7 @@ public class CockpitUIView : MonoBehaviour
         Vector2 targetDirection = GameController.Instance.GetTargetVector();
         if (targetDirection != Vector2.zero)
         {
-            _targetArrow.transform.localPosition =  new Vector3(targetDirection.x * 380, targetDirection.y * 380, 0);
+            _targetArrow.transform.localPosition =  new Vector3(targetDirection.x * 50, targetDirection.y * 50, 0);
             _targetArrow.transform.right = new Vector2(targetDirection.x, targetDirection.y);
             _targetArrow.transform.Rotate (Vector3.forward * 90);
         }

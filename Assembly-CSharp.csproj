@@ -44,14 +44,15 @@
     <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
-  <ItemGroup>     <Compile Include="Assets\LongClickButton.cs" />
-     <Compile Include="Assets\Modern_GUI_Skin\Demo_Assets\scripts\GUI_Demo.cs" />
+  <ItemGroup>     <Compile Include="Assets\Modern_GUI_Skin\Demo_Assets\scripts\GUI_Demo.cs" />
      <Compile Include="Assets\Scripts\DialogueController.cs" />
      <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyView.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
+     <Compile Include="Assets\Scripts\LongClickButton.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
+     <Compile Include="Assets\Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Player\Devices\Engine.cs" />
      <Compile Include="Assets\Scripts\Player\Devices\PlayerDevice.cs" />
      <Compile Include="Assets\Scripts\Player\Devices\Viewport.cs" />
@@ -59,11 +60,11 @@
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerView.cs" />
+     <Compile Include="Assets\Scripts\Station.cs" />
      <Compile Include="Assets\Scripts\UI\CockpitUI\CockpitUI.cs" />
      <Compile Include="Assets\Scripts\UI\CockpitUI\CockpitUIController.cs" />
      <Compile Include="Assets\Scripts\UI\CockpitUI\CockpitUIView.cs" />
      <Compile Include="Assets\Scripts\UIController.cs" />
-     <Compile Include="Assets\Station.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/git_projects/MiniBeansJam4/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
